@@ -748,12 +748,7 @@ static int iface_stat_fmt_proc_show(struct seq_file *m, void *v)
 
 	iface_entry = list_entry(v, struct iface_stat, list);
 
-	if (iface_entry->active) {
-		stats = dev_get_stats(iface_entry->net_dev,
-				      &dev_stats);
-	} else {
-		stats = &no_dev_stats;
-	}
+	stats = &no_dev_stats;
 	/*
 	 * If the meaning of the data changes, then update the fmtX
 	 * string.
@@ -1114,7 +1109,7 @@ data_counters_update(struct data_counters *dc, int set,
  */
 static void iface_stat_update(struct net_device *net_dev, bool stash_only)
 {
-	struct rtnl_link_stats64 dev_stats, *stats;
+	struct rtnl_link_stats64 *stats;
 	struct iface_stat *entry;
 
 	stats = dev_get_stats(net_dev, &dev_stats);
